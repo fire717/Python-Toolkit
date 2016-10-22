@@ -16,8 +16,8 @@ second = sleeptime(0,0,3)
 
 #设置邮件接收
 host = 'pop.126.com'
-username = 'firetest@126.com'
-password = 'fire15yww8t4u'
+username = 'xxx@126.com'
+password = 'xxxxx'
 
 while 1==1:
     time.sleep(second)
