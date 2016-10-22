@@ -1,7 +1,8 @@
-# -*- coding: utf-8 -*-
+# coding:utf-8
 # https://www.chilkatsoft.com/refdoc/pythonCkMailManRef.html   chilkat模块文档
 # http://justcoding.iteye.com/blog/918934    例子
-# 下一步工作 读取完邮件后删除
+# 下一步工作 读取完邮件后删除 已完成
+# 优化代码，打包EXE，增加指令功能
 
 import time
 import sys
@@ -44,13 +45,28 @@ while 1==1:
     for i in range(0,bundle.get_MessageCount()):
         email = bundle.GetEmail(i)
 
-    # Display the From email address and the subject.
-        print email.ck_from()
-        print email.subject() + "\n"
-    #根据主题数字执行不同指令
+        if email.ck_from().decode('gbk') == u'firetest <firetest@126.com>':
+            #print email.subject() + "\n"
+            #######################指令区####################
+            if email.subject() == '1':
+                os.system('tgp_daemon.exe')
+                #为了防止弹出权限提示不直接打开，需要以管理员身份运行此程序
+            if email.subject() == '2':
+                f = open('f.txt','w')
+            if email.subject() == '3':
+                pass
+            if email.subject() == '4':
+                pass
+            if email.subject() == '5':
+                pass
+            if email.subject() == '6':
+                pass
+            if email.subject() == '7':
+                pass
+            if email.subject() == '8':
+                os.system('notepad')
+            if email.subject() == '9':
+                os.system('Shutdown.exe -s -t 60')
+            #########################指令区完########################
 
-        if email.subject() == '4':
-            f = open('f.txt','w')
-        if email.subject() == '5':
-            os.system('notepad')
-input()
+            mailman.DeleteEmail(email)
