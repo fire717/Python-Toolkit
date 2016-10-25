@@ -3,6 +3,7 @@
 # http://justcoding.iteye.com/blog/918934    例子
 # 下一步工作 读取完邮件后删除 已完成
 # 优化代码，打包EXE，增加指令功能
+# 用的好好的，突然报错了，应该是拉的太频繁被网易服务器限制了。。。T.T这条路也只能走到这了
 
 import time
 import sys
