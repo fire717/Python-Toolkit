@@ -43,12 +43,13 @@ for k in xrange(0,coutn):
     xi = int(np.random.uniform(0,img1.shape[1]))
     xj = int(np.random.uniform(0,img1.shape[0]))
         #add noise
-    if img1.ndim == 2:
-        img1[xj,xi] = 255
-    elif img1.ndim == 3:
-        img1[xj,xi,0] = 25
-        img1[xj,xi,1] = 20
-        img1[xj,xi,2] = 20
+    if k%10==0:
+        if img1.ndim == 2:
+            img1[xj,xi] = 255
+        elif img1.ndim == 3:
+            img1[xj,xi,0] = 25
+            img1[xj,xi,1] = 20
+            img1[xj,xi,2] = 20
         
 cv2.namedWindow('img1')
 cv2.imshow('img1',img1)
