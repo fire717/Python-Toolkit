@@ -1,6 +1,5 @@
 #coding=utf8
 #!/usr/bin/python
-
 import requests
 import itchat
 
