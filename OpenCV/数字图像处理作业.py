@@ -1,4 +1,5 @@
 #coding:UTF-8
+#数字图像处理课的作业，使用一些基本操作处理图片
 
 import cv2
 import cv2.cv as cv
