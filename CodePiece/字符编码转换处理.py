@@ -37,3 +37,10 @@ def to_str(unicode_or_str):
     else:
         value = bytes_or_str
     return value   #instance of str
+
+'''
+还有个方法记录下，修改默认编码的，在sublime中用过，不知道是针对sublime的还是都有这个问题
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8') #Python的str默认是ascii编码，和unicode编码冲突
+'''
