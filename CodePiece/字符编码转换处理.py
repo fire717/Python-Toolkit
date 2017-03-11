@@ -1,3 +1,4 @@
+#《Effective Python》第一章第3条
 '''
 python3中，bytes是包含8位值的序列，str是包含unicode的序列。不能用+、>等符号混合操作；
 python2中，str是包含8位值得序列，unicode是包含unicode的序列。若str只含有7位ASCII字符，则可通过操作符来混合操作。
@@ -8,7 +9,7 @@ python2中，str是包含8位值得序列，unicode是包含unicode的序列。�
 #Python3中，接受str或bytes，返回str的方法：
 def to_str(bytes_or_str):
     if isinstance(bytes_or_str,bytes):    #isinstance(object，[type]) 来判断一个对象是否是一个已知的类型,返回布尔值
-        value = bytes_or_str.decode('utf-8') #以utf-8对对象编码
+        value = bytes_or_str.decode('utf-8') #以utf-8对对象编码，将其他编码的字符串转换成unicode编码
     else:
         value = bytes_or_str
     return value   #instance of str
@@ -16,7 +17,7 @@ def to_str(bytes_or_str):
 #Python3中，接受str或bytes，返回bytes的方法：
 def to_bytes(bytes_or_str):
     if isinstance(bytes_or_str,str):    
-        value = bytes_or_str.encode('utf-8') #以utf-8对对象解码
+        value = bytes_or_str.encode('utf-8') #以utf-8对对象解码，将unicode编码转换成其他编码的字符串
     else:
         value = bytes_or_str
     return value   #instance of bytes
