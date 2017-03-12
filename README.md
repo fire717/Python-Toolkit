@@ -6,7 +6,7 @@ The way of learning Python.
 * [OpenCV](https://github.com/fire717/Python-Learner/tree/master/OpenCV)
 
 ## 书&课程
-* [[Effective Python 编写高质量Python代码的59个有效方法](https://github.com/fire717/Python-Learner/tree/master/Books-Classes/Effective%20Python)]
+* [Effective Python 编写高质量Python代码的59个有效方法](https://github.com/fire717/Python-Learner/tree/master/Books-Classes/Effective%20Python)]
 
 ## 小项目
 * [手机远程控制电脑](https://github.com/fire717/Python-Learner/tree/master/Project/Remote-Control-Computer) 
