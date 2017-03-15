@@ -59,6 +59,18 @@ def sort_priority2(numbers,group):
 #好吧上面两个问题暂时是想不通了
 #百度下压压惊
 #[Python 五个知识点搞定作用域](http://python.jobbole.com/86465/)
+#终极版作用域
+ 
+name = "lzl"
+ 
+def f1():
+    print(name)
+def f2():
+    name = "eric"
+    f1()
+f2()
+# 输出：lzl
+
 #新浪面试题
  
 li = [lambda :x for x in range(10)]
