@@ -40,3 +40,62 @@ ret,imgBin = cv2.threshold(imgGray,127,255,cv2.THRESH_BINARY)  #两个返回值�
 showImg(imgBin)
 
 cv2.imwrite("bin.jpg", imgBin)
+
+
+######ver2
+#coding:utf-8
+
+import cv2
+
+#1.图片
+#读彩色图片并显示
+img1 = cv2.imread('1.jpg')
+cv2.namedWindow('img1')
+cv2.imshow('img1',img1)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+#显示灰度图
+imgGray = cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)
+cv2.namedWindow('img2')
+cv2.imshow('img2',imgGray)
+cv2.waitKey(1000)
+cv2.destroyAllWindows()
+
+#显示二值图
+imgBin = cv2.threshold(imgGray,127,255,cv2.THRESH_BINARY)[1]
+cv2.namedWindow('img3')
+cv2.imshow('img3',imgBin)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+#2.视频
+#播放制定视频
+cap = cv2.VideoCapture(r'C:\Users\Fire\Desktop\1.avi')
+while(cap.isOpened()):
+    frame = cap.read()[1]
+    cv2.imshow('frame',frame)
+    if cv2.waitKey(30) & 0xFF == ord('q'):
+        break
+cap.release()
+cv2.destroyAllWindows()
+
+
+
+#3.摄像头
+#调用摄像头，显示，并存摄像头视频
+cap = cv2.VideoCapture(0)
+# Define the codec and create VideoWriter object
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi',fourcc, 20.0, (640,480))
+while(cap.isOpened()):
+    frame = cap.read()[1]
+    out.write(frame)
+    cv2.imshow('frame',frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+# Release everything if job is finished
+cap.release()
+out.release()
+cv2.destroyAllWindows()
