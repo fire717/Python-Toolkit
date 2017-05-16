@@ -13,6 +13,7 @@ The way of learning Python.
 * [彩票号码生成](https://github.com/fire717/Python-Learner/tree/master/Project/CaiPiao)
 * [图片转字符图片](https://github.com/fire717/Python-Learner/tree/master/Project/pic2charpic)
 * [微信图灵机器人](https://github.com/fire717/Python-Learner/tree/master/Project/wechatRobot)
+* [微信生命线游戏](/Project/Lifeline)
 
 ## 代码片段
 * [我的第一个渣渣爬虫](https://github.com/fire717/Python-Learner/blob/master/CodePiece/my_first_crawler.py)
