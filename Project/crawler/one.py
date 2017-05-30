@@ -21,5 +21,8 @@ i = 10  #索引页
 while i<100:
     raw_url = "http://wufazhuce.com/question/%s" % i
     html = getHtml(raw_url)
-    print i,':',getTitle(html)[0].strip()
+    try:
+        print i,':',getTitle(html)[0].strip()
+    except:
+        print('%d : deleted!' % i)
     i+=1
