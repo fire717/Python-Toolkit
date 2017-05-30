@@ -1,4 +1,5 @@
 #coding=utf-8
+#某天突然想起之前在one上看到过的一篇问答，想找来再看看，于是写了这个
 import urllib
 import re
 import os
