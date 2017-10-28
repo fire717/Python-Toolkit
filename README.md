@@ -7,7 +7,7 @@ The way of learning Python.
 ### 库&框架
 * 图像处理： [OpenCV](./tools/OpenCV)
 * 数据处理： [Numpy](./tools/numpy) | [Pandas](./tools/pandas)
-* 可视分析： [matplotlib](./tools/matplotlib) | [seaborn](./tootls/seaborn)
+* 可视分析： [matplotlib](./tools/matplotlib) | [seaborn](./tools/seaborn)
 * 文字处理： [re](./tools/re)
 
 
