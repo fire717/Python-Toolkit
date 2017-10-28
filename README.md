@@ -27,6 +27,7 @@ s.istitle() #判断是否所有字符为首字母大写
 * [Pandas]()
 * [matplotlib]() |
     [让plt图中正确显示中文](/CodePiece/%E8%AE%A9plt%E5%9B%BE%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%B8%AD%E6%96%87.py)
+* [seaborn]()
 * [re]()
 
 
