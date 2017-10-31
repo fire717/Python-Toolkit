@@ -2,6 +2,14 @@
 
 ```python
 ###1.python  
+#读写txt
+with open(r'./data/user_dict.txt','r',encoding='utf-8') as f:
+    data = f.readlines()
+#追加模式
+with open(r'./data/user_dict.txt','a',encoding='utf-8') as f:
+    t = '你好'
+    f.write('\n'+t)
+
 #按行读取tsv / 内存大可以直接.readlines()
 with open('./data/train.tsv',encoding = 'utf-8') as file:
     line = file.readline()
