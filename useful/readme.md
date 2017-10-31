@@ -28,6 +28,9 @@ np.save("./././x.npy",x)
 x = np.load(r"./././x.npy")
 
 ###4.pandas
+#read xlsx
+data = pd.read_excel(r'xxxx.xlsx','Sheet1')
+
 #dict to df
 result = {x:1,y:2,..}  
 df = pd.DataFrame(list(result.items()), columns=['key','value'])
