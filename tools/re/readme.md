@@ -1,3 +1,11 @@
+* 搜索
+
+```python
+#[\u4e00-\u9fa5]匹配中文，[^\u4e00-\u9fa5]匹配非中文
+t = re.compile(r'[\u4e00-\u9fa5]')
+re.search(t,text)
+```
+
 * 分割
 
 ```python
