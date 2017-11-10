@@ -7,3 +7,8 @@ np.concatenate((x,y),axis=0)
 ```
 if row['xxx'] is np.nan:
 ```
+
+* 获取某列值等于某个值的行
+```
+df[df['列名'].isin([相应的值])]
+```
