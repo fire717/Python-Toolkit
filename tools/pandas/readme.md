@@ -13,7 +13,7 @@ if row['xxx'] is np.nan:
 df[df['列名'].isin([相应的值])]
 ```
 
-* 
+* 重新从0开始索引
 ```
-
+df.reset_index(drop=True)  
 ```
