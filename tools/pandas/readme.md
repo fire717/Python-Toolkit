@@ -17,3 +17,13 @@ df[df['列名'].isin([相应的值])]
 ```
 df.reset_index(drop=True)  
 ```
+
+* 去掉重复值
+```
+df['xx'].drop_duplicates()
+```
+
+* 排序
+```
+df = dfsort_values(["xx"])
+```
