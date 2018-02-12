@@ -14,8 +14,8 @@ def getHtml(url):
 
 
 def getItems(html):
-    #输入 列表页
-    #输出 该列表页的子链接
+    #input： 列表页
+    #output 该列表页的子链接
     reg = r'thread[0-9\-]*\.html'
     urlre = re.compile(reg)
     items = re.findall(urlre,html)
@@ -55,17 +55,16 @@ for i in range(7,10):
     isExists=os.path.exists(savePath)
     if not isExists:
         os.makedirs(savePath)
+    #part 2  根据内页获取图片 
     for j in items:
         insideUrl = "xxxxxx/forum/" + j
-        print('.=.',end='')
+        print('.',end='')
         try:
-            print('.+.',end='')
             imgUrl = getImg(insideUrl)
             res=requests.get(imgUrl)
             with open('/Users/fire/A/workshop/pachong/sis/result/%s/%s.jpg' % (i,j),'wb') as f:
                 f.write(res.content)
         except:
-            print('.-.',end='')
             continue
 
 print('Done.')
