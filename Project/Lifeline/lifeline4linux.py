@@ -4,9 +4,9 @@ import itchat,time
 import random
 import threading
 from itchat.content import *
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8') #Python的str默认是ascii编码，和unicode编码冲突
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf8') #Python的str默认是ascii编码，和unicode编码冲突
 
 
 
@@ -16,7 +16,7 @@ def add_friend(msg, status=3):
     time.sleep(5)
     itchat.send_msg(u'在吗，有人吗！？', msg['RecommendInfo']['UserName'])
 
-def wait_active(seconds,msg):
+def wait_active(seconds,msg): 
     global user_step
     time.sleep(seconds)
     user_step[msg['FromUserName']] /= 1000  #解锁以继续流程

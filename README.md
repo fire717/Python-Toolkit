@@ -2,7 +2,9 @@
 
 The way of learning Python.
 
-#### [==常用功能==](./useful)
+[装饰器](./tools/learn_decorator.ipynb)
+
+#### [常用功能](./useful)
 
 ### 库&框架
 * 图像处理： [OpenCV](./tools/OpenCV)

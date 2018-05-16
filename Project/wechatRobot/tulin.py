@@ -24,6 +24,7 @@ def get_response(msg):
         # 将会返回一个None
         return
 
+
 # 这里是我们在“1. 实现微信消息的获取”中已经用到过的同样的注册方法
 @itchat.msg_register(itchat.content.TEXT)
 def tuling_reply(msg):
