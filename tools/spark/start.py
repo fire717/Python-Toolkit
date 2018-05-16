@@ -1,4 +1,3 @@
-#在windows安装部署spark(python版) https://blog.csdn.net/hjxinkkl/article/details/57083549?winzoom=1
 from pyspark import SparkConf, SparkContext
 conf = SparkConf().setMaster("local[*]").setAppName("First_App")
 sc = SparkContext(conf=conf)
