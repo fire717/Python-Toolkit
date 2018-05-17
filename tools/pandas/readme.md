@@ -25,5 +25,5 @@ df['xx'].drop_duplicates()
 
 * 排序
 ```
-df = dfsort_values(["xx"])
+df = df.sort_values(["xx"])
 ```
