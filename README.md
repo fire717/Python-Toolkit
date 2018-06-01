@@ -14,8 +14,8 @@ The way of learning Python.
 
 
 ### 书&课程
-* [《Effective Python 编写高质量Python代码的59个有效方法》](/Books-Classes/Effective%20Python)
-* 《Python高手之路》:  [装饰器](./tools/learn_decorator.ipynb) | [迭代器send](./tools/learn_generator_send.py) | [抽象语法树]()
+* [《Effective Python 编写高质量Python代码的59个有效方法》](/Books-Classes/Effective-Python)
+* 《Python高手之路》:  [装饰器](./Books-Classes/PythonHackersGuide/learn_decorator.ipynb) | [迭代器send](./Books-Classes/PythonHackersGuide/learn_generator_send.py) | [抽象语法树](./Books-Classes/PythonHackersGuide/ast.py)
 
 
 ### 小项目
