@@ -10,7 +10,6 @@ The way of learning Python.
 * 数据处理： [Numpy](./tools/numpy) | [Pandas](./tools/pandas)
 * 可视分析： [matplotlib](./tools/matplotlib) | [seaborn](./tools/seaborn)
 * 文字处理： [re](./tools/re)
-* 大数据： [Spark](./tools/spark)
 
 
 ### 书&课程
