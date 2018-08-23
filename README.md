@@ -16,6 +16,10 @@ The way of learning Python.
 * [《Effective Python 编写高质量Python代码的59个有效方法》](/Books-Classes/Effective-Python)
 * 《Python高手之路》:  [装饰器](./Books-Classes/PythonHackersGuide/learn_decorator.ipynb) | [迭代器send](./Books-Classes/PythonHackersGuide/learn_generator_send.py) | [抽象语法树](./Books-Classes/PythonHackersGuide/ast.py) |[memoization](https://blog.csdn.net/feeltouch/article/details/45072725) | [multiprocessing](https://blog.csdn.net/cityzenoldwang/article/details/78584175)
 
+### 小工具
+* [文件夹下图片批量重命名](./tools/mine/rename.py)
+* [批量复制图片](./tools/mine/copyImg.py)
+* [批量移动图片](./tools/mine/moveImg.py)
 
 ### 小项目
 * [【爬虫们】](/Project/crawler) 
