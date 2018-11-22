@@ -68,6 +68,8 @@ def addPadding(img, h_ratio_max = 0.12, w_ratio_max = 0.2):
     image[h_pad:h+h_pad,w_pad:w+w_pad,:] = img
     return image
 
+
+
 def rotRandrom(img, factor, size):
     #随机 几何变换（移动、旋转） 透视变换
     #shape = size
@@ -84,6 +86,18 @@ def rotRandrom(img, factor, size):
     M = cv2.getPerspectiveTransform(pts1, pts2)
     dst = cv2.warpPerspective(img, M, size)
     # 几何变换操作函数 第一个参数为原始图像 第二个参数为变换矩阵 第三个参数为输出图片的（宽，高）
+    # 框坐标变换
+    box = ((1,2),(3,4),(5,6),(7,8)) #左上 右上 左下 右下
+    def _coords_affine(m,coords):
+        affined_cords = []
+        for cd in coords:
+            n = np.array([[cd[0]],[cd[1]],[1]],dtype=np.float64)
+            pro = np.dot(m,n)
+            af_cd = (int(round(pro[0,0]/pro[2,0])),int(round(pro[1,0]/pro[2,0])))
+            affined_cords.append(af_cd)
+        return tuple(affined_cords)
+    new_box = _coords_affine(M,box) #变换后的框坐标
+    
     return dst
 
 def tfactor(img):
