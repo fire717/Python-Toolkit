@@ -100,3 +100,12 @@ print(d)
 s = timestamp_datetime(1427704700)
 print(s)
 ```
+
+* 排序
+```
+#方法1.用List的成员函数sort进行排序，在本地进行排序，不返回副本
+#方法2.用built-in函数sorted进行排序（从2.4开始），返回副本，原始输入不变
+listX = [[1,4],[2,5],[3,3]]
+sorted(listX, key=lambda x : x[1])
+#>>[[3, 3], [1, 4], [2, 5]]
+```
