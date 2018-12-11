@@ -36,5 +36,11 @@ The way of learning Python.
 * [投骰子123我赢45你赢6重投](/CodePiece/投骰子123我赢45你赢.py)
 
 
-### 扩展：shell脚本
+### 扩展：Linux
+
+#### 1.命令行
+* [Linux统计文件夹、文件数量的命令](https://www.cnblogs.com/uzipi/p/6100790.html)
+
+
+#### 2.shell脚本
 * [获取文件夹下所有文件名](./shell/getAllName.sh)
