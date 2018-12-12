@@ -38,7 +38,7 @@ The way of learning Python.
 
 ### 扩展：Linux
 
-#### 1.[命令行常用指令](./linux/readme.md)
+#### 1.[命令行常用指令](./linux/)
 
 #### 2.shell脚本
 * [获取文件夹下所有文件名](./linux/shell/getAllName.sh)
