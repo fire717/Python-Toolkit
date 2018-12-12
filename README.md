@@ -38,9 +38,7 @@ The way of learning Python.
 
 ### 扩展：Linux
 
-#### 1.命令行
-* [Linux统计文件夹、文件数量的命令](https://www.cnblogs.com/uzipi/p/6100790.html)
-
+#### 1.[命令行常用指令](./linux/readme.md)
 
 #### 2.shell脚本
-* [获取文件夹下所有文件名](./shell/getAllName.sh)
+* [获取文件夹下所有文件名](./linux/shell/getAllName.sh)
