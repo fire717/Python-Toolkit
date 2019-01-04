@@ -17,3 +17,10 @@ counts = np.bincount(a)
 np.argmax(counts)
 #>> 1
 ```
+
+* 交换两行/列
+```
+#（例如opencv读取图片为RGB的顺序，想转位BGR）
+img = cv2.imread("xx.jpg") #img.shape = h*w*3
+img[:,:,[0,2]] = img[:,:,[2,0]]  #交换了第三维中的0列和2列 即BGR转为RGB
+```
