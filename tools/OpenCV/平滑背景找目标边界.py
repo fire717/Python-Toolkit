@@ -24,11 +24,11 @@ def findBox(img):
     cv2.imwrite('2thresh.jpg', thresh)
 
 
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
-    closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
-
-    closed = cv2.erode(closed, None, iterations=4)
-    closed = cv2.dilate(closed, None, iterations=4)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)) 
+    opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel)
+    cv2.imwrite('3opening.jpg', opening)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (20, 20)) 
+    closed = cv2.dilate(opening, kernel, iterations=2)
     cv2.imwrite('3closed.jpg', closed)
 
     (_, cnts, _) = cv2.findContours(closed,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
