@@ -48,12 +48,15 @@ def getAllName(file_dir):
 
 ############################################################   main func
 
-def rot(img,angel,shape,max_angel):
+def rot(img):
     """ 使图像轻微的畸变   倾斜
         img 输入图像
         factor 畸变的参数
         size 为图片的目标尺寸
     """
+    angel = r(60) - 30
+    max_angel = 30
+    shape = img.shape
     size_o = [shape[1],shape[0]]
     size = (shape[1]+ int(shape[0]*cos((float(max_angel )/180) * 3.14)),shape[0])
     interval = abs( int( sin((float(angel) /180) * 3.14)* shape[0]));
