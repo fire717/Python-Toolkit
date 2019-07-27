@@ -27,8 +27,7 @@ with open(r"./x.json",'w') as f:
 print('done')
 #read
 with open(r"./x.json",'r') as f:
-    for line in f:
-        x = json.loads(line)  
+    x = json.loads(f.readlines()[0])  
 
 ###3.numpy 存储list
 x = [x,]
