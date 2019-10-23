@@ -19,3 +19,8 @@ print(mnist.train.labels[:10])
 
 np.save("train_x.npy", np.reshape(mnist.train.images,(mnist.train.images.shape[0],28,28,1)))
 np.save("train_y.npy", mnist.train.labels)
+
+
+#保存单张图片  需要乘255
+import cv2
+cv2.imwrite("t.png",mnist.train.images[0]*255)
