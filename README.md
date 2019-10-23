@@ -35,6 +35,7 @@ The way of learning Python.
 * [批量替换文本中字符](/CodePiece/%E6%89%B9%E9%87%8F%E6%9B%BF%E6%8D%A2%E6%96%87%E6%9C%AC%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6.py)
 * [投骰子123我赢45你赢6重投](/CodePiece/投骰子123我赢45你赢.py)
 * [解压MNIST数据集](/CodePiece/unzip_MNIST.py)
+* [解压MNIST数据集](/CodePiece/gray2rgb.py)
 
 
 ### 扩展：Linux
