@@ -30,6 +30,29 @@ def U8C1_to_JPG(read_path, save_path, w, h):
     img.save(save_path, "JPEG")
 
 
+def U8C3_package_to_JPG(read_path, save_path, w, h):
+
+    with open(read_path, "rb") as f:
+        raw_data = f.read()
+    print(len(raw_data))
+    print(raw_data[:10])
+    print(w*h)
+
+    total_p = w*h*3
+    rgb_bytes = bytearray(w*h*3)
+
+
+    for i in range(total_p):
+        rgb_bytes[i] = raw_data[i]
+
+    img = Image.frombytes(data=bytes(rgb_bytes), decoder_name="raw", mode='RGB', size=(w,h))
+
+    #img = cv2.cvtColor(np.array(img), cv2.COLOR_BGR2RGB)
+    print("Image object created. Starting to save")
+    #img.save(save_path, "JPEG")
+    cv2.imwrite(save_path, np.array(img))
+
+
 def JPG_to_U8C1(read_path, save_path):
 
     img = Image.open(read_path)
@@ -110,10 +133,10 @@ def YUV420SP_to_JPG(read_path, save_path, width, height):
 
 if __name__=="__main__":
 
-    yuv_data_path = "save_gmm_yuv420sp_test444.yuv"
-    save_path = "resize_test444.jpg"
+    yuv_data_path = "save_gmm_yuv420sp_test666.yuv"
+    save_path = "resize_test666.jpg"
 
-    U8C1_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
+    U8C3_package_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
 
 
     # read_path = "1080.jpg"
