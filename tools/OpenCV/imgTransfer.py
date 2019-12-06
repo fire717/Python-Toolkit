@@ -10,7 +10,7 @@ def gray_jpg_resize(read_path, save_path, resize_w, resize_h):
     cv2.imwrite(save_path, img)
 
 
-def U8C1_to_JPG(read_path, save_path, w, h):
+def f8UC1_to_JPG(read_path, save_path, w, h):
 
     with open(read_path, "rb") as f:
         raw_data = f.read()
@@ -30,7 +30,7 @@ def U8C1_to_JPG(read_path, save_path, w, h):
     img.save(save_path, "JPEG")
 
 
-def U8C3_package_to_JPG(read_path, save_path, w, h):
+def f8UC3_package_to_JPG(read_path, save_path, w, h):
 
     with open(read_path, "rb") as f:
         raw_data = f.read()
@@ -53,7 +53,32 @@ def U8C3_package_to_JPG(read_path, save_path, w, h):
     cv2.imwrite(save_path, np.array(img))
 
 
-def JPG_to_U8C1(read_path, save_path):
+def f8UC3_planar_to_JPG(read_path, save_path, w, h):
+
+    with open(read_path, "rb") as f:
+        raw_data = f.read()
+    print(len(raw_data))
+    print(raw_data[:10])
+    print(w*h)
+
+    total_p = w*h*3
+    rgb_bytes = bytearray(w*h*3)
+
+
+    for i in range(total_p):
+        rgb_bytes[i] = raw_data[i]
+
+    b = Image.frombytes(data=bytes(rgb_bytes[:w*h]), decoder_name="raw", mode='L', size=(w,h))
+    g = Image.frombytes(data=bytes(rgb_bytes[w*h:w*h*2]), decoder_name="raw", mode='L', size=(w,h))
+    r = Image.frombytes(data=bytes(rgb_bytes[w*h*2:]), decoder_name="raw", mode='L', size=(w,h))
+
+    img = cv2.merge([np.array(b),np.array(g),np.array(r)])
+    print("Image object created. Starting to save")
+    #img.save(save_path, "JPEG")
+    cv2.imwrite(save_path, np.array(img))
+
+
+def JPG_to_8UC1(read_path, save_path):
 
     img = Image.open(read_path)
     print(img.size)
@@ -66,7 +91,15 @@ def JPG_to_U8C1(read_path, save_path):
         f.write(img)
 
 
+def f8UC1_3_to_JPG(read_path_B, read_path_G, read_path_R, save_path):
+    b = cv2.imread(read_path_B, 0)
+    g = cv2.imread(read_path_G, 0)
+    r = cv2.imread(read_path_R, 0)
 
+    img = cv2.merge([np.array(b),np.array(g),np.array(r)])
+    print("Image object created. Starting to save")
+    #img.save(save_path, "JPEG")
+    cv2.imwrite(save_path, np.array(img))
 
 
 
@@ -133,17 +166,41 @@ def YUV420SP_to_JPG(read_path, save_path, width, height):
 
 if __name__=="__main__":
 
-    yuv_data_path = "save_gmm_yuv420sp_test666.yuv"
-    save_path = "resize_test666.jpg"
+    # yuv_data_path = "save_gmm_yuv420sp_test333.yuv"
+    # save_path = "resize_test333.jpg"
+    # YUV420SP_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
 
-    U8C3_package_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
+    # yuv_data_path = "save_gmm_yuv420sp_test444.yuv"
+    # save_path = "resize_test444.jpg"
+    # U8C3_planar_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
 
+    # yuv_data_path = "save_gmm_yuv420sp_test666.yuv"
+    # save_path = "resize_test666.jpg"
+    # U8C1_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
 
     # read_path = "1080.jpg"
     # save_path = "1080.yuv"
     # JPG_to_U8C1(read_path, save_path)
 
+    yuv_data_path = "save_gmm_yuv420sp_test333.yuv"
+    save_path = "save_gmm_yuv420sp_test333.jpg"
+
+    f8UC1_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
+
+
+
+
+    yuv_data_path = "save_gmm_yuv420sp_test444.yuv"
+    save_path = "resize_test444.jpg"
+    f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
     yuv_data_path = "save_gmm_yuv420sp_test555.yuv"
     save_path = "resize_test555.jpg"
-
-    YUV420SP_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
+    f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
+    yuv_data_path = "save_gmm_yuv420sp_test666.yuv"
+    save_path = "resize_test666.jpg"
+    f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
+    jpg_path_b = "resize_test444.jpg"
+    jpg_path_g = "resize_test555.jpg"
+    jpg_path_r = "resize_test666.jpg"
+    save_path = "resize_test111.jpg"
+    f8UC1_3_to_JPG(jpg_path_b, jpg_path_g, jpg_path_r, save_path)
