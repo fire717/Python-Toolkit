@@ -110,9 +110,9 @@ def YUV420SP_to_JPG(read_path, save_path, width, height):
         uv_width=width//2
         uv_height=height//2
 
-        Y=np.zeros((height,width),np.uint8,'C')
-        U=np.zeros((uv_height,uv_width),np.uint8,'C')
-        V=np.zeros((uv_height,uv_width),np.uint8,'C')
+        Y=np.zeros((height,width),np.uint16,'C')
+        U=np.zeros((uv_height,uv_width),np.uint16,'C')
+        V=np.zeros((uv_height,uv_width),np.uint16,'C')
 
         for m in range(height):
             for n in range(width):
@@ -138,14 +138,25 @@ def YUV420SP_to_JPG(read_path, save_path, width, height):
         gf=Y-0.395*(U-128.0)-0.581*(V-128.0)
         bf=Y+2.032*(U-128.0)
 
+        # rf = Y + 1.402 * (V - 128)                 # r
+        # gf = Y - 0.34413 * (U - 128) - 0.71414 * (V-128)  # g
+        # bf = Y + 1.772 * (U-128) + 0                          # b
+
+
         for m in range(height):
             for n in range(width):
                 if(rf[m,n]>255):
-                    rf[m,n]=255;
+                    rf[m,n]=255
                 if(gf[m,n]>255):
-                    gf[m,n]=255;
+                    gf[m,n]=255
                 if(bf[m,n]>255):
-                    bf[m,n]=255;
+                    bf[m,n]=255
+                if(rf[m,n]<0):
+                    rf[m,n]=0
+                if(gf[m,n]<0):
+                    gf[m,n]=0
+                if(bf[m,n]<0):
+                    bf[m,n]=0
 
         r=rf.astype(np.uint8)
         g=gf.astype(np.uint8)
@@ -166,9 +177,9 @@ def YUV420SP_to_JPG(read_path, save_path, width, height):
 
 if __name__=="__main__":
 
-    # yuv_data_path = "save_gmm_yuv420sp_test333.yuv"
-    # save_path = "resize_test333.jpg"
-    # YUV420SP_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
+    yuv_data_path = "save_gmm_yuv420sp_test333.yuv"
+    save_path = "save_gmm_yuv420sp_test333.jpg"
+    YUV420SP_to_JPG(yuv_data_path, save_path, 1920//1, 1080//1)
 
     # yuv_data_path = "save_gmm_yuv420sp_test444.yuv"
     # save_path = "resize_test444.jpg"
@@ -182,25 +193,32 @@ if __name__=="__main__":
     # save_path = "1080.yuv"
     # JPG_to_U8C1(read_path, save_path)
 
-    yuv_data_path = "save_gmm_yuv420sp_test333.yuv"
-    save_path = "save_gmm_yuv420sp_test333.jpg"
+    # yuv_data_path = "save_gmm_yuv420sp_test333.yuv"
+    # save_path = "save_gmm_yuv420sp_test333.jpg"
 
-    f8UC1_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
+    # f8UC1_to_JPG(yuv_data_path, save_path, 720//1, 576//1)
 
 
-
+    # yuv_data_path = "save_gmm_yuv420sp_test444.yuv"
+    # save_path = "save_gmm_yuv420sp_test444.jpg"
+    # f8UC3_package_to_JPG(yuv_data_path, save_path, 1920//1, 1080//1);
 
     yuv_data_path = "save_gmm_yuv420sp_test444.yuv"
-    save_path = "resize_test444.jpg"
-    f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
-    yuv_data_path = "save_gmm_yuv420sp_test555.yuv"
-    save_path = "resize_test555.jpg"
-    f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
-    yuv_data_path = "save_gmm_yuv420sp_test666.yuv"
-    save_path = "resize_test666.jpg"
-    f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
-    jpg_path_b = "resize_test444.jpg"
-    jpg_path_g = "resize_test555.jpg"
-    jpg_path_r = "resize_test666.jpg"
-    save_path = "resize_test111.jpg"
-    f8UC1_3_to_JPG(jpg_path_b, jpg_path_g, jpg_path_r, save_path)
+    save_path = "save_gmm_yuv420sp_test444.jpg"
+    f8UC3_planar_to_JPG(yuv_data_path, save_path, 416//1, 416//1);
+
+
+    # yuv_data_path = "save_gmm_yuv420sp_test444.yuv"
+    # save_path = "resize_test444.jpg"
+    # f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
+    # yuv_data_path = "save_gmm_yuv420sp_test555.yuv"
+    # save_path = "resize_test555.jpg"
+    # f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
+    # yuv_data_path = "save_gmm_yuv420sp_test666.yuv"
+    # save_path = "resize_test666.jpg"
+    # f8UC1_to_JPG(yuv_data_path, save_path, 416//1, 416//1)
+    # jpg_path_b = "resize_test444.jpg"
+    # jpg_path_g = "resize_test555.jpg"
+    # jpg_path_r = "resize_test666.jpg"
+    # save_path = "resize_test111.jpg"
+    # f8UC1_3_to_JPG(jpg_path_b, jpg_path_g, jpg_path_r, save_path)
