@@ -10,7 +10,7 @@ import os
 import cv2
 import numpy as np
 from math import *
-import PIL
+#import PIL
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
@@ -132,7 +132,7 @@ class DataAugment(object):
     def imgChannel(self):
         # 通道变换(交换、复制)
 
-        b, g, r = img[:,:,:1], img[:,:,1:2], img[:,:,2:3]
+        b, g, r = self.img[:,:,:1], self.img[:,:,1:2], self.img[:,:,2:3]
 
         if randomSmallerChance(0.06):
             b = b*random.random()
