@@ -269,44 +269,42 @@ class DataAugment(object):
             y = random.randint(0, self.img_h - shelter_size - 1)
             self.img[y:y+shelter_size, x:x+shelter_size] = d
 
-    def imgPadToSquare(self, img):
+    def imgPadToSquare(self):
         # 图片填充为正方形
-        h,w,c = img.shape
-        max_value = max(h,w)
-        pad_value = max_value - min(h,w)
+        
+        max_value = max(self.img_h, self.img_w)
+        pad_value = max_value - min(self.img_h, self.img_w)
         left_top = int(pad_value*random.random())
         right_bottom = pad_value - left_top
-        print(pad_value, left_top, right_bottom)
-        new_img = np.zeros((max_value,max_value,3), dtype=np.uint8)
-        if(max_value==w):
-            new_img[left_top:max_value-right_bottom,:] = img
+        
+        new_img = np.zeros((max_value, max_value, self.img_channel), dtype=np.uint8)
+        if(max_value==self.img_w):
+            new_img[left_top:max_value-right_bottom,:] = self.img
         else:
-            new_img[:,left_top:max_value-right_bottom] = img
+            new_img[:,left_top:max_value-right_bottom] = self.img
 
-        return new_img
+        self.img = new_img
 
 
 
-    def imgPart(self, img):
+    def imgPart(self):
         # 图片取部分再resize放大到原尺寸
         #### param zore ###
         part_ratio_max = 0.4
         part_ratio_min = 0.2
         ###################
 
-        h,w,c = img.shape
         part_ratio = 1 - (random.random()*(part_ratio_max - part_ratio_min) + part_ratio_min)
 
-        new_h = int(part_ratio*h)
-        new_w = int(part_ratio*w)
+        new_h = int(part_ratio*self.img_h)
+        new_w = int(part_ratio*self.img_w)
 
-        left = int((w - new_w)*random.random())
-        top = int((h - new_h)*random.random())
-        print(h,w,part_ratio)
-        print(left,top,new_h,new_w)
-        new_img = img[top:top+new_h,left:left+new_w]
-        new_img = cv2.resize(new_img,(w,h))
-        return new_img
+        left = int((self.img_w - new_w)*random.random())
+        top = int((self.img_h - new_h)*random.random())
+
+        new_img = self.img[top:top+new_h,left:left+new_w]
+        new_img = cv2.resize(new_img,(self.img_w, self.img_h))
+        self.img = new_img
 
     ####### merge all ########
     def imgOutput(self):
