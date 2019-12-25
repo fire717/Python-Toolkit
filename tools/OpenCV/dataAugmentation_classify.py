@@ -284,6 +284,8 @@ class DataAugment(object):
             new_img[:,left_top:max_value-right_bottom] = self.img
 
         self.img = new_img
+        self.img_h = new_img.shape[0]
+        self.img_w = new_img.shape[1]
 
 
 
