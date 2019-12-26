@@ -308,9 +308,45 @@ class DataAugment(object):
         new_img = cv2.resize(new_img,(self.img_w, self.img_h))
         self.img = new_img
 
+
+    def imgFixedPart(self):
+        # 图片取固定部分（左上右上左下右下中间）再resize放大到原尺寸
+        #### param zore ###
+        part_ratio = 0.6
+        ####################
+
+        new_h = int(part_ratio*self.img_h)
+        new_w = int(part_ratio*self.img_w)
+
+        if randomSmallerChance(0.2):
+            left = 0
+            top = 0
+        elif randomSmallerChance(0.4):
+            left = self.img_w - new_w
+            top = 0
+        elif randomSmallerChance(0.6):
+            left = 0
+            top = self.img_h - new_h
+        elif randomSmallerChance(0.8):
+            left = self.img_w - new_w
+            top = self.img_h - new_h
+        else:
+            left = (self.img_w - new_w)//2
+            top = (self.img_h - new_h)//2
+
+        new_img = self.img[top:top+new_h,left:left+new_w]
+        new_img = cv2.resize(new_img,(self.img_w, self.img_h))
+        self.img = new_img
+
+
     ####### merge all ########
     def imgOutput(self):
         if randomSmallerChance(0.8):
+            self.imgFixedPart()
+
+        self.imgPadToSquare() 
+
+        if randomSmallerChance(0.4):
             if randomSmallerChance(0.8):
                 self.imgChannel()
             else:
@@ -326,7 +362,7 @@ class DataAugment(object):
             else:
                 self.imgMove()
 
-        if randomSmallerChance(0.4):
+        if randomSmallerChance(0.2):
             if randomSmallerChance(0.6):
                 self.imgGauss()
             else:
@@ -340,6 +376,7 @@ class DataAugment(object):
 
         if randomSmallerChance(0.4):
             self.imgShelter()
+
         return self.img
 
 
