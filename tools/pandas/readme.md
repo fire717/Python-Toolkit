@@ -1,3 +1,8 @@
+* 根据index和head赋值
+```
+df.loc['0','A'] = 1
+```
+
 * 合并两个df
 ```
 np.concatenate((x,y),axis=0)
