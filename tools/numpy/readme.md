@@ -24,3 +24,7 @@ np.argmax(counts)
 img = cv2.imread("xx.jpg") #img.shape = h*w*3
 img[:,:,[0,2]] = img[:,:,[2,0]]  #交换了第三维中的0列和2列 即BGR转为RGB
 ```
+
+
+### 工具
+* [打乱训练集和验证集](./tools/transformation_data.py)
