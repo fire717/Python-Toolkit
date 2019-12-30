@@ -5,17 +5,16 @@ import numpy as np
 import os,shutil
 import random
 
-def getAllName(file_dir): 
+def getAllName(file_dir, tail_list = ['.jpg']): 
     L=[] 
     for root, dirs, files in os.walk(file_dir):
         # root 所指的是当前正在遍历的这个文件夹的本身的地址
         # dirs 是一个 list ，内容是该文件夹中所有的目录的名字(不包括子目录)
         # files 同样是 list , 内容是该文件夹中所有的文件(不包括子目录)
         for file in files:
-            if os.path.splitext(file)[1] == '.jpg':
+            if os.path.splitext(file)[1] in tail_list:
                 L.append(os.path.join(root, file))
     return L
-
 
 def mycopyfile(srcfile,dstfile):
     if not os.path.isfile(srcfile):
