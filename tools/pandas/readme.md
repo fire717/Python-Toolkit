@@ -32,3 +32,14 @@ df['xx'].drop_duplicates()
 ```
 df = df.sort_values(["xx"])
 ```
+
+* 遍历行
+```
+for index, row in df.iterrows():
+    print(row["c1"], row["c2"])
+    
+    
+for row in df.itertuples(index=True, name='Pandas'):
+    print(getattr(row, "c1"), getattr(row, "c2"))
+#itertuples()应该比iterrows()快
+```
