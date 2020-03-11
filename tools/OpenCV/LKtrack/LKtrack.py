@@ -7,6 +7,7 @@ from math import isnan
 from skimage import transform as tf
 
 
+#多目标
 
 c = 0
 
