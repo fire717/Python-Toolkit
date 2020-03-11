@@ -6,6 +6,8 @@ import time
 import cv2
 
 
+#单目标KCF追踪
+
 tracker = cv2.TrackerKCF_create()
 #需要安装contrib    pip install opencv-contrib-python
 
