@@ -31,7 +31,7 @@ img[:,:,[0,2]] = img[:,:,[2,0]]  #交换了第三维中的0列和2列 即BGR转�
 R = np.array([1, 2, 3, 4, 5, 6]) #初始化一组数据
 R_mean = np.mean(R) #计算均值
 R_var = np.var(R)  #计算方差
-R_sc = np.mean((R - R_mean) ** 3)  #计算偏斜度
+R_sc = np.mean(((R - R_mean)/R_var**0.5) ** 3) #计算偏斜度
 R_ku = np.mean((R - R_mean) ** 4) / pow(R_var, 2) #计算峰度
 print([R_mean, R_var, R_sc, R_ku])
 ```
