@@ -1,4 +1,17 @@
 ### 常用
+
+* 修改数据类型
+```
+x = np.array(x,dtype=np.int32)
+```
+
+* one-hot
+```
+num_classes = 10
+arr = [1,3,4,5,9]
+arr = np.eye(10)[arr]
+```
+
 * 合并
 ```
 x1 = np.array([[1,2]])
