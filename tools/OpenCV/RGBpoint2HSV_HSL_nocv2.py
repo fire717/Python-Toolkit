@@ -44,7 +44,7 @@ def RGB2HSL(r, g, b):
         s = 0
     elif 0<l<0.5:
         s = (mx-mn)*1.0/(2*l)
-    elif l>0.5:
+    elif l>=0.5:
         s = (mx-mn)*1.0/(2-2*l)
-    
+
     return h, s, l
