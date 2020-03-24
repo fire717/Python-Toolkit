@@ -6,7 +6,7 @@ import cv2
 import time
 import math
 
-
+#@Fire
 
 def RGB2HSV(r, g, b):
     r, g, b = r/255.0, g/255.0, b/255.0
@@ -78,8 +78,9 @@ class ColorSimilarity(object):
         for i in range(15):
             for j in range(9):
                 color_bgr = self.palette_img[25+50*j][25+50*i]
-                #print(i*6+j,color_bgr)
-                self.palette_color.append(color_bgr)
+                color_rgb = [color_bgr[2], color_bgr[1], color_bgr[0]]
+                #print(color_rgb)
+                self.palette_color.append(color_rgb)
 
     def computeLABColorDistance(self, rgb1, rgb2):
         R_1,G_1,B_1 = rgb1
@@ -94,23 +95,23 @@ class ColorSimilarity(object):
 
     def nearestColor(self, color_rgb):
         #color_rgb = [r,g,b]
+    
+        dist_list = []
+
+        for j,rgb2 in enumerate(self.palette_color):
+            dist = self.computeLABColorDistance(rgb1, rgb2)
+            dist_list.append([dist, j])
+
+
+
         H_1,S_1,V_1 = RGB2HSV(*color_rgb)
-        print("hsv: ",H_1,S_1,V_1)
+        #print("hsv: ",H_1,S_1,V_1)
         if V_1<0.15:
-            min_dist = 1.0
-            min_dist_cate = 134
+            dist_list[134] = [10.0,134]
 
-        else:
-            dist_list = []
 
-            for j,rgb2 in enumerate(self.palette_color):
-                dist = self.computeLABColorDistance(rgb1, rgb2)
-                dist_list.append([dist, j])
-
-            dist_list = sorted(dist_list, key=lambda x:x[0])
-
+        dist_list = sorted(dist_list, key=lambda x:x[0])
         #print(min_dist, min_dist_cate)
-
         mid_dist = dist_list[0][0]
         min_cate = dist_list[0][1]
 
@@ -179,7 +180,7 @@ if '__main__' == __name__:
     
     # random test
     rgb1 = [random.randint(0,255),random.randint(0,255),random.randint(0,255)]
-    #rgb1 = [213,162,163]
+    #rgb1 = [255,0,0]
     print("Color: ",rgb1)
 
     color_img = np.ones((100,200,3))*[rgb1[2],rgb1[1],rgb1[0]]
