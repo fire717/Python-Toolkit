@@ -2,8 +2,14 @@
 
 ```python
 #[\u4e00-\u9fa5]匹配中文，[^\u4e00-\u9fa5]匹配非中文
+#py2
 t = re.compile(r'[\u4e00-\u9fa5]')
 re.search(t,text)
+
+#py3
+ch = re.compile(u'[\u4e00-\u9fa5]+')
+words = ch.search(line.strip())
+word = words.group()
 ```
 
 * 分割
