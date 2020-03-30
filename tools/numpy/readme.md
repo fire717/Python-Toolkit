@@ -49,6 +49,17 @@ R_ku = np.mean((R - R_mean) ** 4) / pow(R_var, 2) #计算峰度
 print([R_mean, R_var, R_sc, R_ku])
 ```
 
+* 二维数组按列或者行求和
+```
+def non_zero_mean(np_arr):
+    exist = (np_arr != 0)
+    num = np_arr.sum(axis=1)
+    #行为0列为1
+    den = exist.sum(axis=1)
+    return num/den
+
+```
+
 ### 工具
 * [打乱训练集和验证集](./tools/transformation_data.py)
 * [计算图像数据集均值标准差](./tools/compute_imgs_mean_std.py)
