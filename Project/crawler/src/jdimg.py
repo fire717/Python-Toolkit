@@ -1,3 +1,7 @@
+
+#配置参考https://www.cnblogs.com/LXP-Never/p/11386933.html#京东爬虫案例
+#主要就是下一个和chrome版本一样的核
+
 from selenium import webdriver
 import time
 
