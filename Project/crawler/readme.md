@@ -6,3 +6,4 @@
 * [爬取彩票历史号码 with beautifulsoup](/Project/crawler/src/cp_crawler.py)
 * [爬百度图片](/Project/crawler/src/baiduimg.py)
 * [用线程下图片，超时跳过](./src/thread_time.py)
+* [selenium爬京东商品详情页图片](./src/jdimg.py)
