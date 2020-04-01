@@ -37,23 +37,26 @@ def gettext():
     return t
 
 class JdSpider(object):
-    def __init__(self):
+    def __init__(self, keywords):
+        self.keywords = keywords
         self.i = 0
         self.page = 0
         self.url = 'https://www.jd.com/'
         self.browser = webdriver.Chrome()
         self.browser_item = webdriver.Chrome()
 
+
     # 获取页面信息 - 到具体商品的页面
     def get_html(self):
         self.browser.get(self.url)
-        self.browser.find_element_by_xpath('//*[@id="key"]').send_keys('polo衫')  # 搜索框输入“爬虫书”
+        self.browser.find_element_by_xpath('//*[@id="key"]').send_keys(self.keywords)  # 搜索框输入“爬虫书”
         self.browser.find_element_by_xpath('//*[@id="search"]/div/div[2]/button').click()  # 点击搜索
         time.sleep(3)  # 给商品页面加载时间
 
 
 
     #解析商品详情页面
+    #这里有优化空间、且不同网站、不同商品页的解析规则可能都不一样
     def parse_html_item(self, item_url):
         print(item_url)
         self.browser_item.get(item_url)
@@ -67,13 +70,54 @@ class JdSpider(object):
         if len(p_list)==0:
             return
 
-        elif len(p_list)==2:
-            img_list = p_list[0].find_elements_by_xpath('img')
+
+        elif len(p_list)==1:
+            div_list = self.browser_item.find_elements_by_xpath('//*[@id="J-detail-content"]/div/div')
+            print("---len div_list: ",len(div_list))
+            for div in div_list:
+                div_list2 = div.find_elements_by_xpath('div')
+                print("--len div_list2",len(div_list2))
+                for div2 in div_list2:
+                    img_node = div2.find_elements_by_xpath('div/img')
+                    print("--len img_node",len(img_node))
+                    if len(img_node)>0:
+                        img_url = img_node[0].get_attribute('src')
+                        #print(img_url)
+
+                        if img_url[-3:]!="jpg":
+                            continue
+
+                        if img_url:
+
+                            action = ActionChains(self.browser_item).move_to_element(img_node[0])#移动到该元素
+                            action.context_click(img_node[0])#右键点击该元素
+
+                            action.perform()#执行保存
+                            time.sleep(1)
+
+                            win32api.keybd_event(86, 0, 0, 0)
+                            win32api.keybd_event(86, 0, win32con.KEYEVENTF_KEYUP, 0)
+                            time.sleep(2)
+                            keyEnter()
+                            time.sleep(1)
+
+                            #img_url_true = gettext()
+
+
+        elif len(p_list)==2 or len(p_list)==3 :
+            for p_one in p_list:
+                img_list = p_one.find_elements_by_xpath('img')
+                if(len(img_list)>1):
+                    break
+
             print("---len img_list: ",len(img_list))
             for img in img_list:
 
                 img_url = img.get_attribute('src')
                 print(img_url)
+
+                if img_url[-3:]=="png":
+                    continue
 
                 if img_url:
 
@@ -89,20 +133,15 @@ class JdSpider(object):
 
                     win32api.keybd_event(86, 0, 0, 0)
                     win32api.keybd_event(86, 0, win32con.KEYEVENTF_KEYUP, 0)
-                    time.sleep(1)
+                    time.sleep(2)
                     keyEnter()
                     time.sleep(1)
 
-                    img_url_true = gettext()
+                    #img_url_true = gettext()
 
-                    
-                #img_url = img.get_attribute('src')
-                #print(img_url)
 
-            print("Done one ------------------------------")
-            time.sleep(1)
 
-        elif len(p_list)>2:
+        elif len(p_list)>3:
 
             for p_img in p_list:
                 img_list = p_img.find_elements_by_xpath('img')
@@ -119,11 +158,11 @@ class JdSpider(object):
 
                     win32api.keybd_event(86, 0, 0, 0)
                     win32api.keybd_event(86, 0, win32con.KEYEVENTF_KEYUP, 0)
-                    time.sleep(1)
+                    time.sleep(2)
                     keyEnter()
                     time.sleep(1)
 
-                    img_url_true = gettext()
+                    #img_url_true = gettext()
 
                     
         else:
@@ -145,8 +184,9 @@ class JdSpider(object):
 
             item_url = link[0].get_attribute('href')
 
+            #item_url = "https://item.jd.com/100004746314.html"
             self.parse_html_item(item_url)
-
+            #b
             
 
     # 主函数
@@ -168,5 +208,7 @@ class JdSpider(object):
 
 
 if __name__ == '__main__':
-    spider = JdSpider()
+
+    keywords = "polo衫"
+    spider = JdSpider(keywords)
     spider.main()
