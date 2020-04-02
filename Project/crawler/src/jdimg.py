@@ -54,10 +54,97 @@ class JdSpider(object):
         time.sleep(3)  # 给商品页面加载时间
 
 
+    def closeWrongPage(self):
+        # self.browser_item.get("view-source:https://item.jd.com/66659620021.html")
+        # current_url = self.browser_item.current_url
+        # print(current_url,len(current_url))
+
+        # current_title = self.browser_item.title
+        # print(current_title,len(current_title))
+
+
+        # self.browser_item.get("https://item.jd.com/66659620021.html")
+        # current_url = self.browser_item.current_url
+        # print(current_url,len(current_url))
+
+        current_title = self.browser_item.title
+        print("in closeWrongPage",current_title,len(current_title))
+
+
+        if len(current_title) ==0:
+            #ctrl+w
+            win32api.keybd_event(17, 0, 0, 0)
+            win32api.keybd_event(87, 0, 0, 0)
+            win32api.keybd_event(17, 0, win32con.KEYEVENTF_KEYUP, 0)
+            win32api.keybd_event(87, 0, win32con.KEYEVENTF_KEYUP, 0)
+            time.sleep(1)
+
 
     #解析商品详情页面
-    #这里有优化空间、且不同网站、不同商品页的解析规则可能都不一样
+    def parse_html_item_all(self, item_url):
+        #不写规则了 遍历所有 但是好像很多img解析出来都是防爬的git
+        #队列
+        self.browser_item.get(item_url)
+        print(item_url)
+
+        find_array = []
+
+        item_p_list = self.browser_item.find_elements_by_xpath('//*[@id="J-detail-content"]/p')
+        find_array.extend(item_p_list)
+        item_div_list = self.browser_item.find_elements_by_xpath('//*[@id="J-detail-content"]/div')
+        find_array.extend(item_div_list)
+
+        idx = 0
+        while 1:
+            if idx== len(find_array):
+                break
+
+            #print("idx: ",idx)
+
+            this_item = find_array[idx]
+            items_div = this_item.find_elements_by_xpath('div')
+            if len(items_div)>0:
+                #print("1111")
+                find_array.extend(items_div)
+
+            items_p = this_item.find_elements_by_xpath('p')
+            if len(items_p)>0:
+                #print("222")
+                find_array.extend(items_p)
+
+            items_img = this_item.find_elements_by_xpath('img')
+            for item_img in items_img:
+                #print("333")
+                img_url = item_img.get_attribute('src')
+                #print("344",img_url)
+                if not img_url:
+                    img_url = item_img.get_attribute('href')
+                    #print("355",img_url)
+                    #b
+                if img_url:
+                    if img_url[-3:]!="jpg":
+                        continue
+                    print(img_url)
+                    action = ActionChains(self.browser_item).move_to_element(item_img)#移动到该元素
+                    action.context_click(item_img)#右键点击该元素
+
+                    action.perform()#执行保存
+                    time.sleep(1)
+
+                    win32api.keybd_event(86, 0, 0, 0)
+                    win32api.keybd_event(86, 0, win32con.KEYEVENTF_KEYUP, 0)
+                    time.sleep(2)
+                    keyEnter()
+                    time.sleep(1)
+
+                    #self.closeWrongPage()
+
+            idx+=1
+
+
+
     def parse_html_item(self, item_url):
+        #手写规则
         print(item_url)
         self.browser_item.get(item_url)
 
@@ -101,6 +188,7 @@ class JdSpider(object):
                             keyEnter()
                             time.sleep(1)
 
+                            #self.closeWrongPage()
                             #img_url_true = gettext()
 
 
@@ -137,6 +225,8 @@ class JdSpider(object):
                     keyEnter()
                     time.sleep(1)
 
+                    #self.closeWrongPage()
+
                     #img_url_true = gettext()
 
 
@@ -162,11 +252,17 @@ class JdSpider(object):
                     keyEnter()
                     time.sleep(1)
 
+                    #self.closeWrongPage()
+
                     #img_url_true = gettext()
 
                     
         else:
             print("--sp len(p_list): ",len(p_list))
+
+
+        self.browser_item.quit()
+        self.browser_item = webdriver.Chrome()
 
     # 解析目录页面
     def parse_html(self):
@@ -193,8 +289,13 @@ class JdSpider(object):
     def main(self):
         self.get_html()
         #self.page = 0
+
+        # self.closeWrongPage()
+        # b
+
         while True:
-            print("-----------------------page----------: ",self.page)
+            print()
+            print("-----------------------page--------------------: ",self.page)
             self.parse_html()
             # 判断是否该点击下一页,没有找到说明不是最后一页
             if self.browser.page_source.find('pn-next disabled') == -1:
@@ -209,6 +310,6 @@ class JdSpider(object):
 
 if __name__ == '__main__':
 
-    keywords = "polo衫"
+    keywords = "商务衬衫"
     spider = JdSpider(keywords)
     spider.main()
