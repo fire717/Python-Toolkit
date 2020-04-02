@@ -298,6 +298,7 @@ class JdSpider(object):
             print()
             print("-----------------------page--------------------: ",self.page)
             if self.page<start_page:
+                self.page+=1
                 continue
             self.parse_html()
             # 判断是否该点击下一页,没有找到说明不是最后一页
