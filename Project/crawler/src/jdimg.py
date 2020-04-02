@@ -2,6 +2,7 @@
 #配置参考https://www.cnblogs.com/LXP-Never/p/11386933.html#京东爬虫案例
 #主要就是下一个和chrome版本一样的核
 
+
 from selenium import webdriver
 import time
 
@@ -286,7 +287,7 @@ class JdSpider(object):
             
 
     # 主函数
-    def main(self):
+    def main(self, start_page=0):
         self.get_html()
         #self.page = 0
 
@@ -296,6 +297,8 @@ class JdSpider(object):
         while True:
             print()
             print("-----------------------page--------------------: ",self.page)
+            if self.page<start_page:
+                continue
             self.parse_html()
             # 判断是否该点击下一页,没有找到说明不是最后一页
             if self.browser.page_source.find('pn-next disabled') == -1:
