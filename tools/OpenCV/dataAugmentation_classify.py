@@ -14,7 +14,7 @@ from math import *
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
-
+from skimage import exposure
 
 ################# tool func
 def randomVal(val):
@@ -176,6 +176,10 @@ class DataAugment(object):
 
         self.img = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR);
 
+    def imgLight(self):         
+        #图像亮度
+        flag = random.uniform(0.5, 1.5)       
+        self.img = exposure.adjust_gamma(img, flag) 
 
     def imgPadding(self):
         # 边缘填充
@@ -196,13 +200,17 @@ class DataAugment(object):
         self.img = cv2.resize(new_img,(self.img_w, self.img_h))
 
 
-    def imgGauss(self):
-        # 高斯平滑
+    def imgBlur(self):
+        # 模糊
         #### param zore ###
         blur_level = random.randint(1,3)
         ###################
-
-        self.img = cv2.blur(self.img, (blur_level * 2 + 1, blur_level * 2 + 1))
+        if random.random()<0.5:
+            self.img = cv2.blur(self.img, (blur_level * 2 + 1, blur_level * 2 + 1))
+        else:
+            kernel_size = (5, 5)   
+            sigma = 1.5   
+            self.img = cv2.GaussianBlur(self.img, kernel_size, sigma)   
 
 
     def imgNoise(self):
@@ -244,6 +252,7 @@ class DataAugment(object):
                 else:
                     NoiseImg[randX,randY]=255          
             return NoiseImg
+  
 
         if random.random()<type_ratio:
             self.img = _addGaussianNoise(self.img)
