@@ -156,9 +156,8 @@ class DataAugment(object):
         elif randomSmallerChance(0.78):
             b,r = r,b
         else:
-            b = (b+g+r)/3
-            b = b.astype('uint8')
-            g,r = b,b
+            gray = r*0.299 + g*0.587 + b*0.114
+            r,g,b = gray, gray, gray
 
         self.img = np.concatenate([b, g, r], axis=-1)
 
