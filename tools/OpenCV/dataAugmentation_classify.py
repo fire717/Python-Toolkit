@@ -179,7 +179,7 @@ class DataAugment(object):
     def imgLight(self):         
         #图像亮度
         flag = random.uniform(0.5, 1.5)       
-        self.img = exposure.adjust_gamma(img, flag) 
+        self.img = exposure.adjust_gamma(self.img, flag) 
 
     def imgPadding(self):
         # 边缘填充
