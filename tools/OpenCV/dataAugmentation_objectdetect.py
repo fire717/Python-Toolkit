@@ -100,15 +100,56 @@ def rotRandrom(img, factor, size):
     
     return dst
 
-def tfactor(img):
-    hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV);
+def imgChannel(self):
+    # 通道变换(交换、复制)
 
-    hsv[:,:,0] = hsv[:,:,0]*(0.9+ np.random.random()*0.2);
-    hsv[:,:,1] = hsv[:,:,1]*(0.25+ np.random.random()*0.7);
-    hsv[:,:,2] = hsv[:,:,2]*(0.15+ np.random.random()*0.8);
+    b, g, r = self.img[:,:,:1], self.img[:,:,1:2], self.img[:,:,2:3]
 
-    img = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR);
-    return img
+    if randomSmallerChance(0.06):
+        b = b*random.random()
+        b = b.astype('uint8')
+    elif randomSmallerChance(0.12):
+        g = g*random.random()
+        g = g.astype('uint8')
+    elif randomSmallerChance(0.18):
+        r = r*random.random()
+        r = r.astype('uint8')
+    elif randomSmallerChance(0.28):
+        b,g = r,r
+    elif randomSmallerChance(0.38):
+        b,r = g,g
+    elif randomSmallerChance(0.48):
+        g,r = b,b
+    elif randomSmallerChance(0.58):
+        b,g = g,b
+    elif randomSmallerChance(0.68):
+        r,g = g,r
+    elif randomSmallerChance(0.78):
+        b,r = r,b
+    else:
+        gray = r*0.299 + g*0.587 + b*0.114
+        r,g,b = gray, gray, gray
+
+    self.img = np.concatenate([b, g, r], axis=-1)
+
+
+def imgColor(self):
+    # 色彩变换
+    #### param zore ###
+
+    ###################
+
+    hsv = cv2.cvtColor(self.img,cv2.COLOR_BGR2HSV);
+    hsv[:,:,0] = hsv[:,:,0]*(0.6+ np.random.random()*0.6);
+    hsv[:,:,1] = hsv[:,:,1]*(0.2+ np.random.random()*1.6);
+    hsv[:,:,2] = hsv[:,:,2]*(0.5+ np.random.random()*0.6);
+
+    self.img = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR);
+
+def imgLight(self):         
+    #图像亮度
+    flag = random.uniform(0.5, 1.5)       
+    self.img = exposure.adjust_gamma(self.img, flag) 
 
 def AddGauss(img, level):
     #高斯平滑
