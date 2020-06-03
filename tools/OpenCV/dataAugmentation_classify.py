@@ -384,7 +384,8 @@ class DataAugment(object):
 
         if randomSmallerChance(0.4):
             self.imgShelter()
-
+        
+        self.img = self.img.astype('uint8')
         return self.img
 
 
