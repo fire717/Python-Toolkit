@@ -1,39 +1,37 @@
-#coding:utf-8
+# -*- coding: utf-8 -*
+# @fire 19.7.20
+# update 19.12.15    @ change to class
+
+import numpy as np
+import cv2
+
 import random
 import os
 import cv2
 import numpy as np
 from math import *
-import PIL
+#import PIL
 from PIL import ImageFont
 from PIL import Image
 from PIL import ImageDraw
+from skimage import exposure
 
-def rot(img,angel,shape,max_angel):
-    """ 使图像轻微的畸变
-        img 输入图像
-        factor 畸变的参数
-        size 为图片的目标尺寸
-    """
-    size_o = [shape[1],shape[0]]
-    size = (shape[1]+ int(shape[0]*cos((float(max_angel )/180) * 3.14)),shape[0])
-    interval = abs( int( sin((float(angel) /180) * 3.14)* shape[0]));
-    pts1 = np.float32([[0,0]         ,[0,size_o[1]],[size_o[0],0],[size_o[0],size_o[1]]])
-    if(angel>0):
-        pts2 = np.float32([[interval,0],[0,size[1]  ],[size[0],0  ],[size[0]-interval,size_o[1]]])
-    else:
-        pts2 = np.float32([[0,0],[interval,size[1]  ],[size[0]-interval,0  ],[size[0],size_o[1]]])
-    M  = cv2.getPerspectiveTransform(pts1,pts2);
-    dst = cv2.warpPerspective(img,M,size)
-    return dst
 
-def r(val):
+def getAllName(file_dir, tail_list = ['.jpg','.png']): 
+    L=[] 
+    for root, dirs, files in os.walk(file_dir):
+        for file in files:
+            if os.path.splitext(file)[1] in tail_list:
+                L.append(os.path.join(root, file))
+    return L
+
+################# tool func
+def randomVal(val):
     # np.random.random()：Return random floats in the half-open interval [0.0, 1.0).
     #返回0-val的随机值
     return int(np.random.random() * val)
 
-
-def randomChance(n):
+def randomSmallerChance(n):
     #n-(0,1)  n的概率为真
     #>n:true <n:false
     t = random.random()
@@ -41,229 +39,154 @@ def randomChance(n):
         return True
     else:
         return False
-
-# test = [0.1,0.3,0.5,0.7,0.9]
-# for t in test:
-#     print(randomChance(t))
-
-def getAllName(file_dir): 
-    L=[] 
-    for root, dirs, files in os.walk(file_dir):
-        for file in files:
-            if os.path.splitext(file)[1] == '.jpg':
-                L.append(os.path.join(root, file))
-    return L
-
-def addPadding(img, h_ratio_max = 0.12, w_ratio_max = 0.2):
-
-    h_ratio = random.random() * h_ratio_max
-    w_ratio = random.random() * w_ratio_max
-
-    h, w = img.shape[:2]
-    h_pad = int(h*h_ratio)
-    w_pad = int(w*w_ratio)
-    h_new = h+h_pad*2
-    w_new = w+w_pad*2
-    image=np.array(Image.new("RGB", (w_new,h_new)))
-    image[h_pad:h+h_pad,w_pad:w+w_pad,:] = img
-    return image
+##################################
 
 
-
-def rotRandrom(img, factor, size):
-    #随机 几何变换（移动、旋转） 透视变换
-    #shape = size
-    w = size[0]
-    h = size[1]
-    pts1 = np.float32([ [0, 0], 
-                        [0, h], 
-                        [w, 0], 
-                        [w, h]])
-    pts2 = np.float32([ [r(factor) ,     r(factor) ], 
-                        [r(factor) ,     h - r(factor) ], 
-                        [w - r(factor) , r(factor) ],
-                        [w - r(factor) , h - r(factor) ]])
-    M = cv2.getPerspectiveTransform(pts1, pts2)
-    dst = cv2.warpPerspective(img, M, size)
-    # 几何变换操作函数 第一个参数为原始图像 第二个参数为变换矩阵 第三个参数为输出图片的（宽，高）
-    # 框坐标变换
-    box = ((1,2),(3,4),(5,6),(7,8)) #左上 右上 左下 右下
-    def _coords_affine(m,coords):
-        affined_cords = []
-        for cd in coords:
-            n = np.array([[cd[0]],[cd[1]],[1]],dtype=np.float64)
-            pro = np.dot(m,n)
-            af_cd = (int(round(pro[0,0]/pro[2,0])),int(round(pro[1,0]/pro[2,0])))
-            affined_cords.append(af_cd)
-        return tuple(affined_cords)
-    new_box = _coords_affine(M,box) #变换后的框坐标
-    
-    return dst
-
-def imgChannel(self):
-    # 通道变换(交换、复制)
-
-    b, g, r = self.img[:,:,:1], self.img[:,:,1:2], self.img[:,:,2:3]
-
-    if randomSmallerChance(0.06):
-        b = b*random.random()
-        b = b.astype('uint8')
-    elif randomSmallerChance(0.12):
-        g = g*random.random()
-        g = g.astype('uint8')
-    elif randomSmallerChance(0.18):
-        r = r*random.random()
-        r = r.astype('uint8')
-    elif randomSmallerChance(0.28):
-        b,g = r,r
-    elif randomSmallerChance(0.38):
-        b,r = g,g
-    elif randomSmallerChance(0.48):
-        g,r = b,b
-    elif randomSmallerChance(0.58):
-        b,g = g,b
-    elif randomSmallerChance(0.68):
-        r,g = g,r
-    elif randomSmallerChance(0.78):
-        b,r = r,b
-    else:
-        gray = r*0.299 + g*0.587 + b*0.114
-        r,g,b = gray, gray, gray
-
-    self.img = np.concatenate([b, g, r], axis=-1)
+class DataAugment(object):
+    """docstring for ClassName"""
+    def __init__(self, img):
+        # img is opencv type
+        self.img = img
+        self.img_h = img.shape[0]
+        self.img_w = img.shape[1]
+        self.img_channel = img.shape[2]
 
 
-def imgColor(self):
-    # 色彩变换
-    #### param zore ###
+    def imgChannel(self):
+        # 通道变换(交换、复制)
 
-    ###################
+        b, g, r = self.img[:,:,:1], self.img[:,:,1:2], self.img[:,:,2:3]
 
-    hsv = cv2.cvtColor(self.img,cv2.COLOR_BGR2HSV);
-    hsv[:,:,0] = hsv[:,:,0]*(0.6+ np.random.random()*0.6);
-    hsv[:,:,1] = hsv[:,:,1]*(0.2+ np.random.random()*1.6);
-    hsv[:,:,2] = hsv[:,:,2]*(0.5+ np.random.random()*0.6);
+        if randomSmallerChance(0.1):
+            b = b*random.random()
+            b = b.astype('uint8')
+        elif randomSmallerChance(0.2):
+            g = g*random.random()
+            g = g.astype('uint8')
+        elif randomSmallerChance(0.3):
+            r = r*random.random()
+            r = r.astype('uint8')
 
-    self.img = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR);
+        elif randomSmallerChance(0.4):
+            b,g = g,b
+        elif randomSmallerChance(0.6):
+            r,g = g,r
+        elif randomSmallerChance(0.8):
+            b,r = r,b
 
-def imgLight(self):         
-    #图像亮度
-    flag = random.uniform(0.5, 1.5)       
-    self.img = exposure.adjust_gamma(self.img, flag) 
+        else:
+            gray = r*0.299 + g*0.587 + b*0.114
+            r,g,b = gray, gray, gray
 
-def AddGauss(img, level):
-    #高斯平滑
-    return cv2.blur(img, (level * 2 + 1, level * 2 + 1));
-
-def AddNoiseSingleChannel(single):
-    diff = 255-single.max();
-    noise = np.random.normal(0,1+r(1),single.shape);
-    noise = (noise - noise.min())/(noise.max()-noise.min())
-    noise= diff*noise;
-    noise= noise.astype(np.uint8)
-    dst = single + noise
-    return dst
-
-def addNoise(img,sdev = 0.5,avg=10):
-    img[:,:,0] =  AddNoiseSingleChannel(img[:,:,0]);
-    img[:,:,1] =  AddNoiseSingleChannel(img[:,:,1]);
-    img[:,:,2] =  AddNoiseSingleChannel(img[:,:,2]);
-    return img
-
-def random_envirment(img,data_set):
-    index=r(len(data_set))
-    env = cv2.imread(data_set[index])
-
-    env = cv2.resize(env,(img.shape[1],img.shape[0]))
-
-    bak = (img==0);
-    bak = bak.astype(np.uint8)*255;
-    inv = cv2.bitwise_and(bak,env)
-    img = cv2.bitwise_or(inv,img)
-    return img
-
-NoPlates = "G:/fire/car/end-to-end-for-chinese-plate-recognition-master/NoPlates"
-noplates_path = [];
-for parent,parent_folder,filenames in os.walk(NoPlates):
-    for filename in filenames:
-        path = parent+"/"+filename;
-        noplates_path.append(path)
-
-def moveImg(img):
-    def translate(image, x, y):
-    # 定义平移矩阵
-        M = np.float32([[1, 0, x], [0, 1, y]])
-        shifted = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
-        return shifted
-    h,w,_ = img.shape
-    h_ratio_mid = 0.2
-    h_move = int(h*(random.random()*0.4+0.05) - h*h_ratio_mid)
-    img = translate(img, 0, h_move)
-
-    w_ratio_mid = 0.16
-    w_move = int(w*(random.random()*0.32+0.02) - w*w_ratio_mid)
-    img = translate(img,  w_move,0)
-    return img
-
-def mirrorImg(img):
-    rd = random.random()
-    if rd<0.33:
-        img = cv2.flip(img, 1)# 横向翻转图像
-    elif rd<0.66:
-        img = cv2.flip(img, 0)# 纵向翻转图像
-    else:
-        img = cv2.flip(img, -1)# 同时在横向和纵向翻转图像
-    return img
+        self.img = np.concatenate([b, g, r], axis=-1)
 
 
-def imgChange(img):
-    if randomChance(0.2):
-        img = rot(img,r(20)-10,img.shape,10); #倾斜
-    if randomChance(0.3): 
-        img = addPadding(img) #填充周围 增大图片 相当于缩小车牌
-        img = random_envirment(img,noplates_path) #随机背景
-    if randomChance(0.3):
-        img = rotRandrom(img,2,(img.shape[1],img.shape[0])); #透视变换 旋转平移
-    if randomChance(0.1):
-        img = tfactor(img) #变色
-    if randomChance(0.1):
-        img = AddGauss(img, 0+r(2)); #高斯平滑模糊
-        #上下翻转 、 镜像 、 平移 
-    if randomChance(0.1):
-        img = addNoise(img) #添加噪声
-    if randomChance(0.1):
-        img = moveImg(img) #平移
-    if randomChance(0.1):
-        img = mirrorImg(img) #翻转
+    def imgColor(self):
+        # 色彩变换
+        #### param zore ###
 
-    return img
+        ###################
 
-def dataAug(origin_path,gene_path,city,counts):
-    #input: a dir of imgs,target generate path, city, times:增加数据倍数
-    #output: augdata
-    #ratio = 3000.0/counts
-    img_names = getAllName(origin_path)
-    # print(len(img_names))
-    #cc = 0
-    for n in img_names:
-        #if city in n:
-        if 1:
-            #print(n)
-            #cc+=1
-            image = cv2.imdecode(np.fromfile(n,dtype = np.uint8),-1)
-            bsname = os.path.basename(n)  
+        hsv = cv2.cvtColor(self.img,cv2.COLOR_BGR2HSV);
+        hsv[:,:,0] = hsv[:,:,0]*(0.6+ np.random.random()*0.6);
+        hsv[:,:,1] = hsv[:,:,1]*(0.6+ np.random.random()*0.8);
+        hsv[:,:,2] = hsv[:,:,2]*(0.7+ np.random.random()*0.4);
 
-            if counts<10:
-                times = ceil(10/counts)
-                for t in range(times):
-                    image2 = imgChange(image)
-                    cv2.imencode('.jpg', image2)[1].tofile(gene_path+bsname.split('.')[-2]+'_'+str(t)+'.jpg')
+        self.img = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR);
+
+
+    def imgLight(self):         
+        #图像亮度
+        flag = random.uniform(1, 2)       
+        self.img = exposure.adjust_gamma(self.img, flag) 
+
+
+    def imgBlur(self):
+        # 模糊
+        #### param zore ###
+        if self.img_h>100:
+            
+            blur_level = random.randint(2,3)
+            ###################
+            if random.random()<0.6:
+                self.img = cv2.blur(self.img, (blur_level * 2 + 1, blur_level * 2 + 1))
             else:
-                tmp = random.random()
-                if tmp<10/counts: 
-                    image3 = imgChange(image)
-                    cv2.imencode('.jpg', image3)[1].tofile(gene_path+bsname.split('.')[-2]+'_0'+'.jpg')
+                kernel_size = (5, 5)   
+                sigma = 1.5   
+                self.img = cv2.GaussianBlur(self.img, kernel_size, sigma)   
+
+
+    def imgNoise(self):
+        # 随机噪声
+
+        def _addPepperandSalt(src):
+            percetage=0.005+random.random()*0.03
+            NoiseImg=src
+            NoiseNum=int(percetage*src.shape[0]*src.shape[1])
+            for i in range(NoiseNum):
+                randX=random.randint(0,src.shape[0]-1)
+                randY=random.randint(0,src.shape[1]-1)
+                if random.randint(0,1)<=0.5:
+                    NoiseImg[randX,randY]=0
+                else:
+                    NoiseImg[randX,randY]=255          
+            return NoiseImg
+  
+
+        self.img = _addPepperandSalt(self.img)
+
+
+
+
+    ####### merge all ########
+    def imgOutput(self):
+
+
+        if randomSmallerChance(0.5):
+            self.imgChannel()
+        elif randomSmallerChance(0.9):
+            self.imgColor()
+        else:
+            self.imgLight()
+
+
+        else:
+            if randomSmallerChance(0.6):
+                self.imgBlur()
+            else:
+                self.imgNoise()
+
+
+        return self.img
+
+
+
+
+def imgsAug(img_dir, target_num = 100):
+    img_names = getAllName(img_dir)
+    origin_num = len(img_names)
+    print("origin_num: ",origin_num)
+    if origin_num<target_num:
+        aug_count = 0
+        while aug_count < target_num-origin_num:
+            if aug_count%500==0:
+                print(aug_count)
+
+            img_id = aug_count%origin_num
+            img_name = img_names[img_id]
+
+            img = cv2.imread(img_name)
+            imgAug = DataAugment(img)
+            img = imgAug.imgOutput()
+
+            save_name = os.path.join(img_dir, "aug_"+str(aug_count)+"_"+os.path.basename(img_name))
+            print(save_name)
+            cv2.imwrite(save_name, img)
+
+            aug_count+=1
 
 
 if __name__ == '__main__':
-    dataAug('t/','tt/','c',1)
+
+    img_dir = "./t/2"
+    imgsAug(img_dir)
