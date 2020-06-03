@@ -111,7 +111,7 @@ class DataAugment(object):
             if random.random()<0.6:
                 self.img = cv2.blur(self.img, (blur_level * 2 + 1, blur_level * 2 + 1))
             else:
-                kernel_size = (5, 5)   
+                kernel_size = (3, 3)   
                 sigma = 1.5   
                 self.img = cv2.GaussianBlur(self.img, kernel_size, sigma)   
 
@@ -120,7 +120,7 @@ class DataAugment(object):
         # 随机噪声
 
         def _addPepperandSalt(src):
-            percetage=0.005+random.random()*0.03
+            percetage=0.003+random.random()*0.03
             NoiseImg=src
             NoiseNum=int(percetage*src.shape[0]*src.shape[1])
             for i in range(NoiseNum):
@@ -150,19 +150,19 @@ class DataAugment(object):
             self.imgLight()
 
 
-        else:
+        if randomSmallerChance(0.5):
             if randomSmallerChance(0.6):
                 self.imgBlur()
             else:
                 self.imgNoise()
 
-
+        self.img = self.img.astype('uint8')
         return self.img
 
 
 
 
-def imgsAug(img_dir, target_num = 100):
+def imgsAug(img_dir, target_num = 10):
     img_names = getAllName(img_dir)
     origin_num = len(img_names)
     print("origin_num: ",origin_num)
@@ -188,5 +188,5 @@ def imgsAug(img_dir, target_num = 100):
 
 if __name__ == '__main__':
 
-    img_dir = "./t/2"
+    img_dir = "./t"
     imgsAug(img_dir)
