@@ -10,7 +10,7 @@ The way of learning Python.
 * 数据处理： [Numpy](./tools/numpy) | [Pandas](./tools/pandas)
 * 可视分析： [matplotlib](./tools/matplotlib) | [seaborn](./tools/seaborn)
 * 文字处理： [re](./tools/re)
-
+* 其他：     [jupyer notebook](./tools/jupyter)
 
 ### 书&课程
 * [《Effective Python 编写高质量Python代码的59个有效方法》](/Books-Classes/Effective-Python)
