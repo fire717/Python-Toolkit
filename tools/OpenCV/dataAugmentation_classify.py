@@ -202,14 +202,19 @@ class DataAugment(object):
     def imgBlur(self):
         # 模糊
         #### param zore ###
-        blur_level = random.randint(1,3)
-        ###################
-        if random.random()<0.5:
-            self.img = cv2.blur(self.img, (blur_level * 2 + 1, blur_level * 2 + 1))
-        else:
-            kernel_size = (5, 5)   
-            sigma = 1.5   
-            self.img = cv2.GaussianBlur(self.img, kernel_size, sigma)   
+        if self.img_h>100:
+            
+            blur_level = random.randint(2,3)
+            ###################
+            if random.random()<0.1:
+                self.img = cv2.blur(self.img, (blur_level * 2 + 1, blur_level * 2 + 1))
+            elif random.random()<0.2:
+                kernel_size = (3, 3)   
+                sigma = 1.5   
+                self.img = cv2.GaussianBlur(self.img, kernel_size, sigma)   
+            else:
+                self.img = cv2.resize(self.img, (self.img_w//2, self.img_h//2))   
+                self.img = cv2.resize(self.img, (self.img_w, self.img_h))  
 
 
     def imgNoise(self):
