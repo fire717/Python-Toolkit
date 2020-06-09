@@ -1,3 +1,8 @@
+### 资源
+* [系统化的学习写Python爬虫](https://github.com/Ehco1996/Python-crawler)
+* [爬视频(抖音等)](https://github.com/loadchange/amemv-crawler)
+
+
 ### 写过的一些小爬虫
 
 * [百度搜索判断是否官网](/Project/crawler/src/my_first_crawler.py)
