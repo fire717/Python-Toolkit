@@ -88,7 +88,7 @@ Counter('1232')['2']
 ```
 
 * timestamp 转换标准时间
-```
+```python
 # 把时间处理 以找到登陆时间
 import time
 def timestamp_datetime(value):
@@ -116,10 +116,16 @@ print(s)
 ```
 
 * 排序
-```
+```python
 #方法1.用List的成员函数sort进行排序，在本地进行排序，不返回副本
 #方法2.用built-in函数sorted进行排序（从2.4开始），返回副本，原始输入不变
 listX = [[1,4],[2,5],[3,3]]
 sorted(listX, key=lambda x : x[1])
 #>>[[3, 3], [1, 4], [2, 5]]
+```
+
+* 文件路径获取
+```python
+path1 = os.getcwd()   #最外层执行的main.py的路径
+path2 = os.path.dirname(os.path.realpath(__file__))  #当前py文件的绝对路径
 ```
