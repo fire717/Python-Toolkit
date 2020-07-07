@@ -122,6 +122,14 @@ print(s)
 listX = [[1,4],[2,5],[3,3]]
 sorted(listX, key=lambda x : x[1])
 #>>[[3, 3], [1, 4], [2, 5]]
+
+### 两个list按同意顺序排序
+list1 = [1, 2, 3, 4, 15, 6]
+list2 = ['a', 'b', 'c', 'd', 'e', 'f']
+c = list(zip(list1,list2))
+c.sort(reverse=True) #降序du
+list1[:],list2[:] = zip(*c)
+print(list1,list2)
 ```
 
 * 文件路径获取
