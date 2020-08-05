@@ -18,6 +18,9 @@ The way of learning Python.
 * 《Python高手之路》:  [装饰器](./Books-Classes/PythonHackersGuide/learn_decorator.ipynb) | [迭代器send](./Books-Classes/PythonHackersGuide/learn_generator_send.py) | [抽象语法树](./Books-Classes/PythonHackersGuide/ast.py) |[memoization](https://blog.csdn.net/feeltouch/article/details/45072725) | [multiprocessing](https://blog.csdn.net/cityzenoldwang/article/details/78584175)
 * [《Python Parallel Programming Cookbook》中文版](https://github.com/laixintao/python-parallel-programming-cookbook-cn)
 
+### 性能探索
+* [多进程加速for循环](./speed/multiprocessing_for.py)
+
 ### 小工具
 * [文件夹下图片批量重命名](./tools/mine/rename.py)
 * [批量复制图片](./tools/mine/copyImg.py)
