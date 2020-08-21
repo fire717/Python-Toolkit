@@ -49,6 +49,12 @@ The way of learning Python.
 
 ### 扩展：Linux
 
+#### 0.Linux通过python3的print中文报错
+```shell
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+```
+
 #### 1.[命令行常用指令](./linux/)
 
 #### 2.shell脚本
