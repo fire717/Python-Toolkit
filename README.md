@@ -47,7 +47,7 @@ The way of learning Python.
 * [二值图转3通道](/CodePiece/gray2rgb.py)
 
 
-### 扩展：Linux
+### 【扩展】：Linux
 
 #### 0.Linux通过python3的print中文报错
 ```shell
