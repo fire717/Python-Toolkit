@@ -137,3 +137,12 @@ print(list1,list2)
 path1 = os.getcwd()   #最外层执行的main.py的路径
 path2 = os.path.dirname(os.path.realpath(__file__))  #当前py文件的绝对路径
 ```
+
+* 同一行刷新打印
+```python
+print("\r",object,end="",flush=True)
+ 
+e.g.
+for i,img_name in enumerate(img_names):
+    print("\r",str(i)+"/"+str(len(img_names)),end="",flush=True)
+```
