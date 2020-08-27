@@ -142,7 +142,7 @@ path2 = os.path.dirname(os.path.realpath(__file__))  #当前py文件的绝对路
 ```python
 print("\r",object,end="",flush=True)
  
-e.g.
+#e.g.
 for i,img_name in enumerate(img_names):
     print("\r",str(i)+"/"+str(len(img_names)),end="",flush=True)
 ```
