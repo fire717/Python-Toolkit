@@ -1,3 +1,10 @@
+* 新建文件夹
+
+```python
+if not os.path.exists(feature_dir):
+    os.mkdirs(feature_dir)
+```
+
 * 后台运行并保存log
 
 ```python
