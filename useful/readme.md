@@ -2,7 +2,7 @@
 
 ```python
 if not os.path.exists(feature_dir):
-    os.mkdirs(feature_dir)
+    os.makedirs(feature_dir)
 ```
 
 * 后台运行并保存log
