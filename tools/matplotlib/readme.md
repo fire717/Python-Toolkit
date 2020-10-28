@@ -11,6 +11,12 @@ fig,_ = plt.subplots(figsize = (40,40))
 ax = plt.subplot(projection='3d')
 ```
 
+* 保存plt图片
+```
+plt.savefig('save.jpg')
+```
+
+
 ## 类型图
 
 * [plt图中文乱码](chinese.py)
