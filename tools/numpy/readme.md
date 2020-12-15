@@ -60,6 +60,34 @@ def non_zero_mean(np_arr):
 
 ```
 
+* 生成位置矩阵（中间大四周小）
+```
+def positionMat(size):
+    mat = np.zeros((size,size))
+    even_size = size%2
+
+    part_size = (size+1)//2
+    mat_lt = np.ones((part_size, part_size))
+    mat_lt = mat_lt * np.array(range(part_size)).reshape((part_size,1))
+    mat_lt_triu = np.triu(mat_lt)
+    mat_lt_triu2 = np.triu(mat_lt,k=1)#不复制对角线
+    mat_lt = mat_lt_triu + mat_lt_triu2.T
+
+    mat[:part_size, :part_size] = mat_lt
+    mat_lb = np.flip(mat_lt,axis=0)
+    mat[part_size:, :part_size] = mat_lb[even_size:,:]
+    
+    mat_rb = np.flip(mat_lb,axis=1)
+    mat[part_size-even_size:, part_size:] = mat_rb[:,even_size:]
+
+    mat_rt = np.flip(mat_rb,axis=0)
+    mat[:part_size-even_size, part_size:] = mat_rt[:part_size-even_size,even_size:]
+    return mat
+
+size = 6
+print(positionMat(size))
+```
+
 ### 工具
 * [打乱训练集和验证集](./tools/transformation_data.py)
 * [计算图像数据集均值标准差](./tools/compute_imgs_mean_std.py)
