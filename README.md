@@ -6,7 +6,7 @@ The way of learning Python.
 
 
 ### 库&框架
-* 图像处理： [OpenCV](./tools/OpenCV) | [Pillow(PIL)](https://www.cnblogs.com/sun-haiyu/p/7127582.html)
+* 图像处理： [OpenCV](./tools/OpenCV) | [Pillow(PIL)](https://www.osgeo.cn/pillow/)
 * 数据处理： [Numpy](./tools/numpy) | [Pandas](./tools/pandas)
 * 可视分析： [matplotlib](./tools/matplotlib) | [seaborn](./tools/seaborn)
 * 文字处理： [re](./tools/re)
