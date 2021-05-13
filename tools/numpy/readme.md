@@ -88,6 +88,12 @@ size = 6
 print(positionMat(size))
 ```
 
+* 元素级应用函数（类似pandas apply）
+```
+#https://blog.csdn.net/kudou1994/article/details/94417926
+np.frompyfunc()
+```
+
 ### 工具
 * [打乱训练集和验证集](./tools/transformation_data.py)
 * [计算图像数据集均值标准差](./tools/compute_imgs_mean_std.py)
