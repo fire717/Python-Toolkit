@@ -50,6 +50,9 @@ print('done')
 #read
 with open(r"./x.json",'r') as f:
     x = json.loads(f.readlines()[0])  
+#读取格式化后的多行json
+with open(r"./x.json",'r') as f:
+    x = json.load(f)
 
 ###3.numpy 存储list
 x = [x,]
