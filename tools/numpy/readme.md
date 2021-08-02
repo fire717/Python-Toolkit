@@ -94,6 +94,19 @@ print(positionMat(size))
 np.frompyfunc()
 ```
 
+* 多维数组索引
+```
+#比如 特征图f的shape=[8,1,4,4]，4x4代表特征图高宽   x=[0,3,2,1,0,0,0,0] y=[0,0,0,0,0,0,0,0]
+#想取f的8个batchsize的对应x、y对应位置的值
+#则需要每一个维度都构建对应的值
+a0 = np.arange(8,dtype=np.int32).reshape(-1,1)
+a1 = np.zeros(8,dtype=np.int32).reshape(-1,1)
+x = x.reshape(-1,1)
+y = y.reshape(-1,1)
+res = f[a0,a1,x,y]
+#res.shape = [8,1]
+```
+
 ### 工具
 * [打乱训练集和验证集](./tools/transformation_data.py)
 * [计算图像数据集均值标准差](./tools/compute_imgs_mean_std.py)
