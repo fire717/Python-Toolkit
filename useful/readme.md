@@ -156,3 +156,11 @@ print("\r",object,end="",flush=True)
 for i,img_name in enumerate(img_names):
     print("\r",str(i)+"/"+str(len(img_names)),end="",flush=True)
 ```
+
+* PIL resize比opencv更清晰
+```
+img = cv2.imread("000000000113_0.jpg")
+img = Image.fromarray(img)
+img = img.resize((192,192))
+img = np.array(img)
+```
