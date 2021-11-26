@@ -1,6 +1,6 @@
-# Python-Learner
+# Python-Toolkit
 
-The way of learning Python.
+Python常用代码、轮子。
 
 * [一般常用功能](./useful)
 
