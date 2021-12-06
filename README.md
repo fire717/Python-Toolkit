@@ -61,5 +61,5 @@ export LANG=en_US.UTF-8
 * [获取文件夹下所有文件名](./linux/shell/getAllName.sh)
 
 #### 3.C++
-* [常用工具类](././CodePiece/cpp/fire_utils.h)
+* [常用功能工具函数封装 fire_utils.h](././CodePiece/cpp/fire_utils.h)
 * [vector排序索引](./CodePiece/cpp/sort_index.cpp)
