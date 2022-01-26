@@ -1,4 +1,7 @@
+import time
 from functools import wraps
+
+LOG_TIME = True
 
 def get_running_time(func):
     # 使用wraps, 保证被装饰过的函数__name__的属性不变
