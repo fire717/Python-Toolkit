@@ -107,6 +107,14 @@ res = f[a0,a1,x,y]
 #res.shape = [8,1]
 ```
 
+* Softmax
+```python
+def softmax(x, axis=None):
+    x = x - x.max(axis=axis, keepdims=True)
+    y = np.exp(x)
+    return y / y.sum(axis=axis, keepdims=True)
+```
+
 ### 工具
 * [打乱训练集和验证集](./tools/transformation_data.py)
 * [计算图像数据集均值标准差](./tools/compute_imgs_mean_std.py)
