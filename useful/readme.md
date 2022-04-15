@@ -45,8 +45,12 @@ with open('./data/train.tsv',encoding = 'utf-8') as file:
 x = {..}
 #save
 with open(r"./x.json",'w') as f:  
-    json.dump(x, f, ensure_ascii=False)     
+    json.dump(x, f, ensure_ascii=False)   #单行
 print('done')
+## 格式化
+with open(r"result.json", 'w') as f:  
+    json.dump(res, f, ensure_ascii=False, indent=4)  
+
 #read
 with open(r"./x.json",'r') as f:
     x = json.loads(f.readlines()[0])  
