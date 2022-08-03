@@ -170,12 +170,12 @@ img = np.array(img)
 ```
 
 * base64转opencv
-```
+```python
 def bs64toimg(bs64):
 
     img_b64decode = base64.b64decode(bs64)  # base64解码
      
-    img_array = np.fromstring(img_b64decode,np.uint8) # 转换np序列
+    img_array = np.frombuffer(img_b64decode,np.uint8) # 转换np序列
     img=cv2.imdecode(img_array,cv2.COLOR_BGR2RGB)  # 转换Opencv格式
 
     return img
