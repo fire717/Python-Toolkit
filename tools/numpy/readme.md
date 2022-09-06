@@ -107,6 +107,12 @@ res = f[a0,a1,x,y]
 #res.shape = [8,1]
 ```
 
+* Sigmoid
+```python
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+```
+
 * Softmax
 ```python
 def softmax(x, axis=None):
