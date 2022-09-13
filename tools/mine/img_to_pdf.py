@@ -21,5 +21,5 @@ def from_photo_to_pdf(photo_path):
 
 
 if __name__ == '__main__':
-    photo_path = r'G:\code\comic\Run away\第2话-知道她身分的男人'
+    photo_path = r'G:\code\comic\xxx'
     from_photo_to_pdf(photo_path)
