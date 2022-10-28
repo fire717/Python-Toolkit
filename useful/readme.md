@@ -171,13 +171,20 @@ img = np.array(img)
 
 * base64转opencv
 ```python
-def bs64toimg(bs64):
-
-    img_b64decode = base64.b64decode(bs64)  # base64解码
-     
-    img_array = np.frombuffer(img_b64decode,np.uint8) # 转换np序列
-    img=cv2.imdecode(img_array,cv2.COLOR_BGR2RGB)  # 转换Opencv格式
-
-    return img
+def imgToBase64(img_array):
+    # 传入图片为RGB格式numpy矩阵，传出的base64也是通过RGB的编码
+    img_array = cv2.cvtColor(img_array, cv2.COLOR_RGB2BGR) #RGB2BGR，用于cv2编码
+    encode_image = cv2.imencode(".jpg", img_array)[1] #用cv2压缩/编码，转为一维数组
+    byte_data = encode_image.tobytes() #转换为二进制
+    base64_str = base64.b64encode(byte_data).decode("ascii") #转换为base64
+    return base64_str
+    
+def base64ToImg(base64_str):
+    # 传入为RGB格式下的base64，传出为RGB格式的numpy矩阵
+    byte_data = base64.b64decode(base64_str)#将base64转换为二进制
+    encode_image = np.asarray(bytearray(byte_data), dtype="uint8")# 二进制转换为一维数组
+    img_array = cv2.imdecode(encode_image, cv2.IMREAD_COLOR)# 用cv2解码为三通道矩阵
+    img_array = cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB)# BGR2RGB
+    return img_array
 
 ```
