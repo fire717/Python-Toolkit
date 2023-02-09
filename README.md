@@ -36,6 +36,7 @@ Python常用代码、轮子。
 * [图片转字符图片](/Project/pic2charpic)
 * [微信图灵机器人](/Project/wechatRobot)
 * [微信生命线游戏](/Project/Lifeline)
+* [模拟50胜率盒子策略](/Project/half_win_box.py)
 
 ### 代码片段
 * [抽象类](/CodePiece/abstract.py)
