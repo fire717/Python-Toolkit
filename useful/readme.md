@@ -8,7 +8,7 @@ if not os.path.exists(feature_dir):
 * 设置显卡
 
 ```python
-os.environ["PYTHONHASHSEED"] = '0'
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 ```
 
 * 后台运行并保存log
