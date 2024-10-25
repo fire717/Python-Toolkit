@@ -2,21 +2,19 @@
 
 import cv2
 import numpy as np
-import os,shutil
+import os
+import shutil
 import random
 
-def getAllName(file_dir, tail_list = ['.jpg']): 
+def get_names(file_dir, tail_list = ['.jpg']): 
     L=[] 
     for root, dirs, files in os.walk(file_dir):
-        # root 所指的是当前正在遍历的这个文件夹的本身的地址
-        # dirs 是一个 list ，内容是该文件夹中所有的目录的名字(不包括子目录)
-        # files 同样是 list , 内容是该文件夹中所有的文件(不包括子目录)
         for file in files:
             if os.path.splitext(file)[1] in tail_list:
                 L.append(os.path.join(root, file))
     return L
 
-def mycopyfile(srcfile,dstfile):
+def copy_file(srcfile,dstfile):
     if not os.path.isfile(srcfile):
         print("%s not exist!"%(srcfile))
     else:
@@ -28,9 +26,9 @@ def mycopyfile(srcfile,dstfile):
 srcfiles="added/ourdata_true_clean_31W/"
 dstfiles='ALL/'
 
-name_list = getAllName(srcfiles)
+name_list = get_names(srcfiles)
 print(name_list[0])
-#mycopyfile(srcfile,dstfile)
+#copy_file(srcfile,dstfile)
 
 for i in range(len(name_list)):
 
@@ -41,4 +39,4 @@ for i in range(len(name_list)):
     if rr<1:
 
         dstfile =  dstfiles+name
-        mycopyfile(name_path,dstfile)
+        copy_file(name_path,dstfile)
