@@ -3,6 +3,10 @@
 ```python
 if not os.path.exists(feature_dir):
     os.makedirs(feature_dir)
+
+or
+
+os.makedirs(feature_dir,exist_ok=True)
 ```
 
 * 设置显卡
