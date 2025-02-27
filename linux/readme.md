@@ -2,7 +2,7 @@
 
 
 * ps -ef|grep xxx                        查看xxx用户下的进程
-* nohup python train.py > train.out 2>&1 &          后台运行脚本，然后tail -f yy.out 实时打印显示
+* nohup python -u train.py > train.out 2>&1 &          后台运行脚本，然后tail -f yy.out 实时打印显示
 * [Linux统计文件夹、文件数量的命令](https://www.cnblogs.com/uzipi/p/6100790.html)
 ```shell
 # 查看当前目录下的文件数量（不包含子目录中的文件）
